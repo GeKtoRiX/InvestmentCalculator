@@ -16,15 +16,16 @@ function App() {
     duration: 10,
   });
   // Функция вызова обновления вводимых данных.
-  function handleChange(inputIdentifire, newValue) {
+  function handleChange(inputIdentifier, newValue) {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput,
-        [inputIdentifire]: +newValue,
+        [inputIdentifier]: +newValue,
       };
     });
   }
 
+  // Проверка валидации длительности инвестиции в месяцах.
   const inputIsValid = userInput.duration >= 1;
 
   return (

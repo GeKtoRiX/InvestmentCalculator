@@ -1,9 +1,3 @@
-// This function expects a JS object as an argument
-// The object should contain the following properties
-// - initialInvestment: The initial investment amount
-// - annualInvestment: The amount invested every year
-// - expectedReturn: The expected (annual) rate of return
-// - duration: The investment duration (time frame)
 export function calculateInvestmentResults({
   initialInvestment,
   annualInvestment,
@@ -11,28 +5,44 @@ export function calculateInvestmentResults({
   duration,
 }) {
   const annualData = [];
+
+  // Сумма которую пользователь получит в конце вклада.
   let investmentValue = initialInvestment;
 
   for (let i = 0; i < duration; i++) {
+    // Процент с вложенных средств.
     const interestEarnedInYear = investmentValue * (expectedReturn / 100);
+    // Процент + новый ежегодный взнос.
     investmentValue += interestEarnedInYear + annualInvestment;
+    // Добавление данных о каждом годе.
     annualData.push({
-      year: i + 1, // year identifier
-      interest: interestEarnedInYear, // the amount of interest earned in this year
-      valueEndOfYear: investmentValue, // investment value at end of year
-      annualInvestment: annualInvestment, // investment added in this year
+      // Номер года
+      year: i + 1,
+      // Процент с вложенных средств.
+      interest: interestEarnedInYear,
+      // Полная сумма накоплений к концу года.
+      valueEndOfYear: investmentValue,
+      // Размер ежегодного взноса.
+      annualInvestment: annualInvestment,
     });
   }
-
+  // Массив данных за время вклада.
   return annualData;
 }
 
-// The browser-provided Intl API is used to prepare a formatter object
-// This object offers a "format()" method that can be used to format numbers as currency
-// Example Usage: formatter.format(1000) => yields "$1,000"
+/* 
+Intl.NumberFormat()
+  Встроенный объект JavaScript, который отвечает за локализацию чисел (форматирование в зависимости от языка и страны).
+'en-US' 
+  Локаль(язык + регион).
+*/
 export const formatter = new Intl.NumberFormat('en-US', {
+  // Форматирование строки как число.
   style: 'currency',
+  // Тип валюты.
   currency: 'USD',
+  // Минимальное количество знаков после запятой.
   minimumFractionDigits: 0,
+  // Максимальное количество знаков после запятой.
   maximumFractionDigits: 0,
 });

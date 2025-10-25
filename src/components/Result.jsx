@@ -2,7 +2,9 @@ import { calculateInvestmentResults, formatter } from '../util/investment.js';
 import styles from './Result.module.scss';
 
 export default function Result({ input }) {
+  // Данные о вкладе, разбитые по годам.
   const resultsData = calculateInvestmentResults(input);
+  // Стартовый капитал.
   const initialInvestment =
     resultsData[0].valueEndOfYear -
     resultsData[0].interest -
@@ -20,10 +22,12 @@ export default function Result({ input }) {
       </thead>
       <tbody>
         {resultsData.map((yearData) => {
+          // Чистый заработок с процентов к концу года.
           const totalInterest =
             yearData.valueEndOfYear -
             yearData.annualInvestment * yearData.year -
             initialInvestment;
+          // Сумма взносов к концу года.
           const totalAmountInvested = yearData.valueEndOfYear - totalInterest;
 
           return (
